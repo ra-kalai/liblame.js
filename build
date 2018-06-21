@@ -1,0 +1,3 @@
+cd lame-svn/lame
+emconfigure ./configure --disable-largefile --disable-frontend --disable-analyzer-hooks --with-fileio=lame --enable-static
+emmake make

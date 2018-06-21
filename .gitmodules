@@ -1,0 +1,3 @@
+[submodule "lame-svn"]
+	path = lame-svn
+	url = https://github.com/Kagami/lame-svn/
