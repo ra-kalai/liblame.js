@@ -3,25 +3,22 @@
 emcc lame-svn/lame/libmp3lame/.libs/libmp3lame.a -o liblame.js -s EXPORTED_FUNCTIONS="['_hip_decode_init','_hip_decode','_hip_decode1','_hip_decode1_headers','_lame_init', '_lame_close', '_lame_set_in_samplerate','_lame_set_VBR', '_lame_init_params','_lame_set_disable_reservoir','_lame_set_brate','_lame_set_mode','_lame_encode_buffer']" -s EXTRA_EXPORTED_RUNTIME_METHODS="['writeAsciiToMemory', 'ccall', 'setValue', 'getValue', 'cwrap']" --memory-init-file 0 --post-js lame.post.js -Os
 
 cat > liblame.min.js <<ø
-(function () {
-  if (typeof define !== "function") {
-    var define = function (f) {
-      var ret = f();
-      var k;
-      for(k in ret) {
-        window[k] = ret[k];
-      }
-    };
+(function (root, factory) {
+  if (typeof define === 'function' && define.amd) {
+      define([], factory);
+  } else if (typeof module === 'object' && module.exports) {
+      module.exports = factory();
+  } else {
+    var o = factory();
+    root.Mp3Decoder = o.Mp3Decoder;
+    root.Mp3Encoder = o.Mp3Encoder;
   }
-
-  define(function() {
+}(typeof self !== 'undefined' ? self : this, function () {
 ø
 
 cat liblame.js >> liblame.min.js 
 
 cat >> liblame.min.js <<ø
-    return { Mp3Encoder: Mp3Encoder, Mp3Decoder: Mp3Decoder };
-  });
-
-})();
+  return { Mp3Encoder: Mp3Encoder, Mp3Decoder: Mp3Decoder };
+}));
 ø
